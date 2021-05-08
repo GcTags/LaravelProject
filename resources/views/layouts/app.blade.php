@@ -19,9 +19,15 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<style>
+.navbar-expand-lg{
+    background-color: #fdea42;
+    color: black;
+}
+</style>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark sticky-top">
+        <nav class="navbar navbar-expand-lg py-3 navbar-light sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'ElectrOrder') }}
@@ -39,7 +45,7 @@
                     <ul class="navbar-nav ml-auto">
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
                           </form>
                         <!-- Authentication Links -->
                         @guest
@@ -55,21 +61,22 @@
                                 </li>
                             @endif
                         @else
+                            @if (Auth::user()->utype === 'ADM')
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                 {{ Auth::user()->name }}
                                 </a>
                     
                                 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ url('products') }}">
-                                     {{ __('My Products') }}
+                                     {{ __('Dashboard') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ url('profile') }}">
-                                        {{ __('My Profile') }}
+                                        {{ __('Products') }}
                                        </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}">
-                                    {{ __('My Orders') }}
+                                    {{ __('Profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -82,6 +89,34 @@
                                     </form>
                                 </div>
                             </li>
+                            @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                 {{ Auth::user()->name }}
+                                </a>
+                    
+                                
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('products.index') }}">
+                                     {{ __('My Products') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ url('profile') }}">
+                                        {{ __('My Profile') }}
+                                       </a>
+                                    <a class="dropdown-item" href="{{ route('carts.index') }}">
+                                    {{ __('My Cart') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>   
+                            @endif
                         @endguest
                     </ul>
                 </div>

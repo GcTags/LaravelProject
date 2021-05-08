@@ -22,8 +22,9 @@ class User extends Authenticatable
         'address',
         'contact',
         'birthdate',
-        'password',
+        'password'
     ];
+    protected $guarded = ['profile_pic'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -47,5 +48,9 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    public function OrderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
     }
 }

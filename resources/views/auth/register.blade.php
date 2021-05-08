@@ -107,8 +107,6 @@
                                         @enderror
                                     </div>
                                 </div>
-        
-    
 
                           <div class="form-group row mb-6">
                             <div class="col-md-12 offset-md-4">

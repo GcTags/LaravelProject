@@ -26,6 +26,7 @@
                         <th scope="col">Price</th>
                         <th scope="col">Stock</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                             @foreach ($products as $product)
@@ -37,6 +38,17 @@
                             <td>{{$product->Price}}</td>
                             <td>{{$product->Stock}}</td>
                             <td>{{$product->Status}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Action
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                      <button class="dropdown-item text-danger" type="button">Delete</button>
+                                      <button class="dropdown-item text-success" type="button">Edit</button>
+                                    </div>
+                                  </div>
+                            </td>
                        
                         </tr>
                     </tbody>

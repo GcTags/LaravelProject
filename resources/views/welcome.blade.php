@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>ElectrOrder</title>
 
         <!-- Fonts -->
-        <pnk href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -26,24 +26,42 @@
 
     @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md ">
+        <div class="row ">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+              </ul>
+
+            <div class="col-sm">
                 <div class="container">
-                    <div class="row"> 
+                    <div class="row justify-content-left"> 
                         @foreach ($products as $product)
-                      <div class="col-md-6 col-xl-3 mb-4">
-                        <a type="button" href="/products/{{$product->id}}">
-                          <div class="card">    
-                            @if ($product->img != '')
-                                <img src="{{asset('/storage/img/'.$product->img)}}" style="width:100%;">
-                             @endif
+                      <div class="col-sm-3 col-md-3 mb-4">
+                        <a href="/products/{{$product->id}}" class="text-dark">
+                          <div class="card" style="width: 100%; height: 100%;">    
                                {{-- <img src="{{$product->img}}" alt="" style="width: 100%;"> --}}
-                                <div class="card-body"> 
-                                <label> {{$product->ProductName}}</label><br>
-                                {{-- {{-- <label>{{$product->ProductDescription}}</label> --}}
-                                <label><span>Php </span>{{$product->Price}}</label>
-                                {{-- <label>{{$product->Status}}</label> --}}
-                              </div> 
+                               <div class="card-body text-center">
+                                    @if ($product->img != '')
+                                    <img class="rounded " src="{{asset('/storage/img/'.$product->img)}}" style="width:150px; height: 100%;">
+                                    @endif                             
+                                </div>
+                                <div class="card-body">
+                                    <label> {{$product->ProductName}}</label><br>
+                                    {{-- {{-- <label>{{$product->ProductDescription}}</label> --}}
+                                    <label>Php {{$product->Price}}</label>
+                                    {{-- <label>{{$product->Status}}</label> --}}
+                              
+                                </div>
                           </div>
                         </a> 
                       </div>
