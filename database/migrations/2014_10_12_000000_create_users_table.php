@@ -17,13 +17,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('email', 50)->unique();
+            $table->boolean('role')->default('2')->comment('1 for Admin and 2 for User or Customer');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('address', 100);
             $table->string('contact', 11)->unique();
             $table->date('birthdate');
             $table->text('profile_pic_path')->nullable();
             $table->string('password',100);
-            $table->string('utype')->default('USR')->comment('ADM for Admin and USR for User or Customer');
             $table->rememberToken();
             $table->timestamps();
         });

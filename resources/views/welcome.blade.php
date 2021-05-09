@@ -46,11 +46,11 @@
                 <div class="container">
                     <div class="row justify-content-left"> 
                         @foreach ($products as $product)
-                      <div class="col-sm-3 col-md-3 mb-4">
+                      <div class="col-sm col-md-3 mb-4 text-center">
                         <a href="/products/{{$product->id}}" class="text-dark">
                           <div class="card" style="width: 100%; height: 100%;">    
                                {{-- <img src="{{$product->img}}" alt="" style="width: 100%;"> --}}
-                               <div class="card-body text-center">
+                               <div class="card-body">
                                     @if ($product->img != '')
                                     <img class="rounded " src="{{asset('/storage/img/'.$product->img)}}" style="width:150px; height: 100%;">
                                     @endif                             

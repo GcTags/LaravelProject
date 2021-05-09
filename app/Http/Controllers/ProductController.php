@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,11 +13,20 @@ class ProductController extends Controller
     
     public function index()
     {
+        if (Auth::user()->role == 1){
 
-        $products = DB::table('products')->get();
-        // dd($products);
+            $products = DB::table('products')->get();
+            return view('products.index', compact('products'));
+
+        }else{
+            $user = User::find(Auth::id());
+            $products = $user->products()->orderBy('created_at','desc')->get();
+            // dd($products);
+            return view('products.index', compact('products'));
+        }
+
+  
         
-        return view('products.index', compact('products'));
 
     }
 
@@ -105,5 +116,10 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $product = Product::find($product->id);
+        // dd($product);
+        $product->delete();
+        return redirect('/products');
+
     }
 }

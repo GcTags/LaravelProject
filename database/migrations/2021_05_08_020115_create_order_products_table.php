@@ -18,6 +18,7 @@ class CreateOrderProductsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('product_id')->unsigned()->nullable();
             $table->integer('order_product_quantity')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

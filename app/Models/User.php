@@ -19,10 +19,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'address',
         'contact',
         'birthdate',
         'password'
+   
     ];
     protected $guarded = ['profile_pic'];
 
@@ -52,5 +54,9 @@ class User extends Authenticatable
     public function OrderProducts()
     {
         return $this->hasMany(OrderProduct::class);
+    }
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -2,8 +2,8 @@
 //Cart 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\OrderProduct;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +19,19 @@ class OrderProductController extends Controller
     public function index()
     {   
         $user = User::find(Auth::id());
-        $orders_product = $user->OrderProducts()->orderBy('created_at','desc')->get();
-        $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
-        return view('carts.index', compact('orders_product', 'count'));
+        $orders_product = DB::table('order_products')
+        ->join('products', 'order_products.product_id', '=', 'products.id')
+        ->where('order_products.user_id', '=', $user->id)
+        ->where('order_products.deleted_at','=', NULL)
+        ->select('order_products.*', 'products.img','products.Price')
+        ->orderBy('order_products.created_at','desc')
+        ->get();
         
+        $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+    
+        // dd($orders_product);
+        return view('carts.index', compact('orders_product','count'));
+
     }
 
     /**
@@ -63,13 +72,12 @@ class OrderProductController extends Controller
      * @param  \App\Models\OrderProduct  $orderProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderProduct $orderProduct)
-    {
-        //
-        $order = Product::find($order->id);
-        // dd($products);
-        return view('order.show', compact('order'));
-    }
+    // public function show(OrderProduct $orderProduct)
+    // {
+    //     //
+    //     $orders_product = Product::find($order->id);
+    //     return view('order.show', compact('orders_product'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -100,8 +108,13 @@ class OrderProductController extends Controller
      * @param  \App\Models\OrderProduct  $orderProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderProduct $orderProduct)
+    public function destroy($id)
     {
-        //
+        $orderProduct = OrderProduct::find($id);
+        // dd($orderProduct);
+        if($orderProduct->delete()){
+            $message = "Product deleted from cart";
+        }
+        return redirect('carts')->with('message', $message);
     }
 }

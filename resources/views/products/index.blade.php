@@ -44,8 +44,12 @@
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                      <button class="dropdown-item text-danger" type="button">Delete</button>
-                                      <button class="dropdown-item text-success" type="button">Edit</button>
+                                        <form method="POST" action="{{route('products.destroy', $product->id)}} ">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                            </form>           
+                                        <button class="dropdown-item text-success" type="button">Edit</button>
                                     </div>
                                   </div>
                             </td>

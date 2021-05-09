@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('Stock')->nullable();
             $table->string('Status', 10)->nullable();
             $table->string('img')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
