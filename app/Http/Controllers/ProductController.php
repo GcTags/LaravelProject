@@ -9,31 +9,30 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+  
 
-    
     public function index()
     {
         if (Auth::user()->role == 1){
 
             $products = DB::table('products')->get();
-            return view('products.index', compact('products'));
+            return view('dashboards.admin.products.index', compact('products'));
 
-        }else{
+        }elseif(Auth::user()->role == 2)
+        {
             $user = User::find(Auth::id());
             $products = $user->products()->orderBy('created_at','desc')->get();
             // dd($products);
-            return view('products.index', compact('products'));
+            return view('dashboards.user.products.index', compact('products'));
         }
 
-  
-        
-
     }
+      
 
     public function create()
     {
         //
-        return view('products.create');
+        return view('dashboards.user.products.create');
     }
 
     public function store(Request $request)
@@ -80,7 +79,7 @@ class ProductController extends Controller
     {
         $product = Product::find($product->id);
         // dd($products);
-        return view('products.show', compact('product'));
+        return view('dashboards.user.products.show', compact('product'));
     }
 
 
@@ -92,7 +91,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+
+        return view('dashboards.user.products.edit', compact('product'));
+
     }
 
     /**
@@ -105,6 +106,22 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        
+        $request->validate([
+            'ProductName' => 'required|unique:products|max:255',
+            'ProductDescription' => 'required',
+            'Price' => 'required|numeric',
+            'Stock' => 'required|numeric',
+            'Status' => 'required'
+        ]);
+        $name = $product->Productname;
+        $product = Product::find($product->id);
+        $product->fill($request->all());
+      
+        if($product->save()){
+            $message =  $name.''."Successfully Updated";
+        }
+        return redirect('/products')->with('message', $message);
     }
 
     /**
@@ -118,8 +135,24 @@ class ProductController extends Controller
         //
         $product = Product::find($product->id);
         // dd($product);
-        $product->delete();
-        return redirect('/products');
+      
+        if($product->delete()){
+            $message = "Successfully Deleted";
+        }
+        return redirect('/products')->with('message', $message);
+    }
 
+    public function search(Request $request){
+        // Get the search value from the request
+        $search = $request->input('term');
+    
+        // Search in the title and body columns from the posts table
+        $products = Product::query()
+            ->where('ProductName', 'LIKE', "%{$search}%")
+            ->orWhere('ProductDescription', 'LIKE', "%{$search}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+        return view('search', compact('products'));
     }
 }

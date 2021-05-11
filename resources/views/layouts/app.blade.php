@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -29,9 +30,7 @@
     /* body{
     background-color: #c7fdff;
 } */
-
 </style>
-
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-lg py-1 navbar-light sticky-top">
@@ -53,8 +52,8 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <form class="form-inline my-2 my-lg-0" action="{{ route('search') }}" >
+                            <input class="form-control mr-sm-2" type="search" name="term" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
                         </form>
 
@@ -81,10 +80,10 @@
 
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ url('products') }}">
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                             {{ __('Dashboard') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ url('profile') }}">
+                                        <a class="dropdown-item" href="{{ route('products.index') }}">
                                             {{ __('Products') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}">
@@ -113,7 +112,7 @@
                                         <a class="dropdown-item" href="{{ route('products.index') }}">
                                             {{ __('My Products') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ url('profile') }}">
+                                        <a class="dropdown-item" href="{{ route('profile.index') }}">
                                             {{ __('My Profile') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('carts.index') }}">
@@ -157,5 +156,4 @@
         </main>
     </div>
 </body>
-
 </html>

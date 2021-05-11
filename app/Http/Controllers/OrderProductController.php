@@ -30,7 +30,7 @@ class OrderProductController extends Controller
         $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
     
         // dd($orders_product);
-        return view('carts.index', compact('orders_product','count'));
+        return view('dashboards.user.carts.index', compact('orders_product','count'));
 
     }
 
@@ -115,6 +115,6 @@ class OrderProductController extends Controller
         if($orderProduct->delete()){
             $message = "Product deleted from cart";
         }
-        return redirect('carts')->with('message', $message);
+        return redirect('/carts')->with('message', $message);    
     }
 }

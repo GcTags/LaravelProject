@@ -15,6 +15,8 @@ class OrderController extends Controller
     public function index()
     {
         //
+        return view('dashboards.user.orders.index');
+
     }
 
     /**

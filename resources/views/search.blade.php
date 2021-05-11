@@ -427,68 +427,36 @@
                 </ul>
 
                 <div class="col-sm ">
-
-                  <div id="carouselExampleInterval" class="carousel slide mb-3" data-ride="carousel" >
-                    <ol class="carousel-indicators">
-                      <li data-target="#carouselExampleInterval" data-slide-to="0" class="active"></li>
-                      <li data-target="#carouselExampleInterval" data-slide-to="1"></li>
-                      <li data-target="#carouselExampleInterval" data-slide-to="2"></li>
-                      <li data-target="#carouselExampleInterval" data-slide-to="3"></li>
-                    </ol>
-                    <div class="carousel-inner" data-interval="1000">
-                      <div class="carousel-item active">
-                        <img src="https://cdn.mos.cms.futurecdn.net/wkNecKqj64E24FugVwnQzd-970-80.jpg.webp"
-                        class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item" data-interval="2000">
-                        <img src="https://www.techspot.com/images2/news/bigimage/2020/10/2020-10-08-image-14.jpg"
-                        class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item" data-interval="3000">
-                        <img src="https://cdn.mos.cms.futurecdn.net/5c2c84d9858776dd49835610d9c14deb.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn.wccftech.com/wp-content/uploads/2020/12/ASUS-ROG-STRIX-Gaming-Laptops-2021_-AMD-Ryzen-5000H-Zen-3-CPUs-NVIDIA-GeForce-RTX-3080-GPUs-_5.jpg"
-                            class="d-block w-100" alt="...">
-                    </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </div>
-               
-                          
-                              
-                         
                         <div class="row justify-content-left">
+                            @if ($products->isNotEmpty())
                             @foreach ($products as $product)
-                                <div class="col-sm col-md-3 mb-4 text-center">
-                                    <a href="/products/{{ $product->id }}" class="text-dark">
-                                        <div class="card" style="width: 100%; height: 100%;">
-                                            <img src="{{ $product->img }}" alt="" style="width: 100%;">
-                                            <div class="card-body">
-                                                @if ($product->img != '')
-                                                    <img class="rounded " src="{{ asset('/storage/img/' . $product->img) }}"
-                                                        style="width:150px; height: 100%;">
-                                                @endif
-                                            </div>
-                                            <div class="card-body">
-                                                <label> {{ $product->ProductName }}</label><br>
-                                                {{-- <label>{{ $product->ProductDescription }}</label> --}}
-                                                <label>Php {{ $product->Price }}</label>
-                                                {{-- <label>{{ $product->Status }}</label> --}}
-
-                                            </div>
+                            <div class="col-sm col-md-3 mb-4 text-center">
+                                <a href="/products/{{ $product->id }}" class="text-dark">
+                                    <div class="card" style="width: 100%; height: 100%;">
+                                        <img src="{{ $product->img }}" alt="" style="width: 100%;">
+                                        <div class="card-body">
+                                            @if ($product->img != '')
+                                                <img class="rounded " src="{{ asset('/storage/img/' . $product->img) }}"
+                                                    style="width:150px; height: 100%;">
+                                            @endif
                                         </div>
-                                    </a>
+                                        <div class="card-body">
+                                            <label> {{ $product->ProductName }}</label><br>
+                                            {{-- <label>{{ $product->ProductDescription }}</label> --}}
+                                            <label>Php {{ $product->Price }}</label>
+
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                          @endforeach
+                            @else
+                            <div class="card" style="width: 100%; height: 100%;">
+                                <div class="card-body text-center">
+                                    <h1>No Products Found</h1>
                                 </div>
-                            @endforeach
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
