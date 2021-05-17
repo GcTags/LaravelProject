@@ -60,18 +60,23 @@ class LoginController extends Controller
 
         if (auth()->attempt(array('email'=>$input['email'], 'password'=>$input['password'])) )
         {
-            if (auth()->user()->role == 1)
+            if (auth()->user()->email_verified_at === NULL)
             {
-                return redirect()->route('admin.dashboard');
-                
-            }else if (auth()->user()->role == 2)
-            {
-                return redirect()->route('user.dashboard');
+                return redirect()->route('login')->with('error','Verify Email to login');
             }
-
+                if (auth()->user()->role == 1)
+                {
+                    return redirect()->route('admin.dashboard');
+                    
+                }
+                else if (auth()->user()->role == 2)
+                {
+                    return redirect()->route('user.dashboard');
+                }
+    
         }else
-        {
-            return redirect()->route('login')->with('error','email and password are wrong');
+        {   
+            return redirect()->route('login')->with('danger',"email and password are wrong");
         }
     }
 }

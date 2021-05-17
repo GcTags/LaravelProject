@@ -75,5 +75,14 @@ class RegisterController extends Controller
             'contact' => $data['contact'],
             'birthdate' => $data['birthdate']
         ]);
+
+        if ('email' != null)
+        {
+            $message = "Account Created. Check email to login" ;
+            return redirect('/register')->with('message', $message);
+        }
+
+        $message = "Something went wrong" ;
+        return redirect('/register')->with('message', $message);
     }
 }

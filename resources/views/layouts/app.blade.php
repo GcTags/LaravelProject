@@ -36,7 +36,7 @@
         <nav class="navbar navbar-expand-lg py-1 navbar-light sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'ElectrOrder') }}
+                    {{ 'ElectrOrder' }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -49,9 +49,9 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-
+                    
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav ml-auto">
                         <form class="form-inline my-2 my-lg-0" action="{{ route('search') }}" >
                             <input class="form-control mr-sm-2" type="search" name="term" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
@@ -70,14 +70,32 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+                            
                         @else
-                            @if (Auth::user()->role === 1)
+                            @if (Auth::user()->email_verified_at === NULL)
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        ({{ Auth::user()->name }})
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            @elseif (Auth::user()->role === 1)
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
                                     </a>
-
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
@@ -85,6 +103,9 @@
                                         </a>
                                         <a class="dropdown-item" href="{{ route('products.index') }}">
                                             {{ __('Products') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('users.index') }}">
+                                            {{ __('User Table') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}">
                                             {{ __('Profile') }}

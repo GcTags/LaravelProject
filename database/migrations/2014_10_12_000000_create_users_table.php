@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->text('profile_pic_path')->nullable();
             $table->string('password',100);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
