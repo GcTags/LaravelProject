@@ -11,12 +11,24 @@ class ProductController extends Controller
 {
   
 
-    public function index()
+    public function index(Request $request)
     {
         if (Auth::user()->role == 1){
 
-            $products = DB::table('products')->get();
-            return view('dashboards.admin.products.index', compact('products'));
+            $products = Product::where([
+                ['ProductName','!=',Null],
+                [function($query) use ($request) {
+                    if (($term = $request->term)) {
+                        $query->orWhere('ProductName','LIKE', '%' . $term . '%')->get();
+                    }
+                }]
+            ])
+                ->withTrashed()
+                ->orderBy("id")
+                ->paginate(10);
+    
+                return view('dashboards.admin.products.index', $products,compact('products'))
+                    ->with('i', (request()->input('page', 1) -1) * 5);
 
         }elseif(Auth::user()->role == 2)
         {
@@ -105,8 +117,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
-        
         $request->validate([
             'ProductName' => 'required|unique:products|max:255',
             'ProductDescription' => 'required',

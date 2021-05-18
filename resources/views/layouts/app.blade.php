@@ -36,7 +36,7 @@
         <nav class="navbar navbar-expand-lg py-1 navbar-light sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ 'ElectrOrder' }}
+                {{ config('app.name', 'ElectrOrder') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -78,7 +78,11 @@
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         ({{ Auth::user()->name }})
                                     </a>
+                                    
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a style="text-align:center;color:red;cursor:context-menu;" class="dropdown-item">
+                                            Verfiy Email <br> Check email to login properly!
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
@@ -107,7 +111,7 @@
                                         <a class="dropdown-item" href="{{ route('users.index') }}">
                                             {{ __('User Table') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('logout') }}">
+                                        <a class="dropdown-item" href="#" id="profile_btn">
                                             {{ __('Profile') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -133,7 +137,7 @@
                                         <a class="dropdown-item" href="{{ route('products.index') }}">
                                             {{ __('My Products') }}
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('profile.index') }}">
+                                        <a class="dropdown-item" href="#" id="profile_btn">
                                             {{ __('My Profile') }}
                                         </a>
                                         <a class="dropdown-item" href="{{ route('carts.index') }}">
@@ -154,6 +158,56 @@
                                     </div>
                                 </li>
                             @endif
+
+                                {{-- START PROFILE MODAL--}}
+                                    <div class="modal primary" id="profile_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="example@Modal.com">User Profile</h5>
+                                                    <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</spam>
+                                                    </button>
+                                                </div>
+                                            <form action="/users" method="POST">
+
+                                                
+                                                <div class="modal-body">
+
+                                                        <div class="form-group">
+                                                            <label>Name: {{Auth::user()->name}}</label>
+                                                            <!-- <input type="text" name="name" class="form-control" placeholder="Name: {{Auth::user()->name}}"> -->
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Email: {{Auth::user()->email}}</label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Address: {{Auth::user()->address}}</label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Contact: {{Auth::user()->contact}}</label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Birthdate: {{Auth::user()->birthdate}}</label>
+                                                        </div>
+
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <li><a type="button" class="btn button btn-info"
+                                                            href="{{ route('users.show', Auth::user()->id) }}" style="width:100%;">Edit</a>
+                                                    </li>
+                                                </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{-- END PROFILE MODAL--}}
+
                         @endguest
                     </ul>
                 </div>
@@ -177,4 +231,25 @@
         </main>
     </div>
 </body>
+
+<script>
+
+var modal = document.getElementById("profile_modal");
+var btn = document.getElementById("profile_btn");
+var cls = document.getElementById("close");
+
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+cls.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
 </html>

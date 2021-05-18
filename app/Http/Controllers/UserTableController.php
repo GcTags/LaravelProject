@@ -66,9 +66,9 @@ class UserTableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('dashboards.user.users.edit', compact('user'));
     }
 
     /**
@@ -77,9 +77,13 @@ class UserTableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user)
     {
-        //
+        User::withTrashed()->find($user)->restore();
+        // dd($user);
+        $message = "Successfully Activated" ;
+        return redirect('/users')->with('message', $message);
+        
     }
 
     /**
@@ -89,14 +93,26 @@ class UserTableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$user)
-    { 
-        User::withTrashed()->find($user)->restore();
-        // dd($user);
-        // return "Restored";
-        $message = "Successfully Activated" ;
-        return redirect('/users')->with('message', $message);
+
+    public function update(User $user ,Request $request)
+    {  
+        $request->validate([
+            'name' => 'required|unique:users',
+            'email' => 'required|unique:users|email',
+            'address' => 'required',
+            'contact' => 'required|numeric',
+            'birthdate' => 'required|date'
+        ]);
+        $name = $user->name;
+        $user_id = User::find($user->id);
+        $user_id->fill($request->all());
+    
+        if($user_id->save()){
+            $message =  $name.' '."Successfully Updated";
+            return redirect('/products')->with('message', $message);
+        }
     }
+        
 
     /**
      * Remove the specified resource from storage.

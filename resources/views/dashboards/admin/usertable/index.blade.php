@@ -27,13 +27,15 @@
                                         name="term"
                                         id="term">
                                     <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-                                    <a href="{{ route('users.index') }}" class=" mt-1">
-                                        <span class="input-group-btn">
-                                            <button type="button" title="Refresh page">i cant use icons for refresh
-                                            <!-- <i class="icon-refresh"></i> 
+                                    <a style="margin-left:10px;" href="{{ route('users.index') }}" class=" mt-1">
+                                            <!-- <i class="fa fa-refresh">I cant put icon for refresh</i> -->
+                                            <!-- <i class="bi bi-arrow-counterclockwise"></i> -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                            </svg>
+                                            <!-- <i class="icon-refresh">Refresh</i> 
                                             <i class="fas fa-redo-alt"></i> -->
-                                            </button> 
-                                        </span>
                                     </a>
                                 </form>
                             </div>
@@ -78,35 +80,79 @@
                                         <td>Deactivated</td>
                                         @endif
                                         <td>
+                                            @if ($user->deleted_at === NULL)
                                             <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                <button class="btn btn-danger dropdown-toggle" type="button"
                                                     id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false">
-                                                    Action
+                                                    Delete
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    @if ($user->deleted_at === NULL)
+                                                    <form 
+                                                    method="POST"
+                                                    action="{{ route('users.destroy', $user->id) }}">
+                                                    <button type="submit" class="dropdown-item text-danger" id="delete_btn">You will delete <br> User: {{ $user->name }}</button>
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    </form>
+                                            @else
+                                                    <div class="dropdown">
+                                                    <button class="btn btn-success dropdown-toggle" type="button"
+                                                        id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        Activate
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                                         <form method="POST"
-                                                            action="{{ route('users.destroy', $user->id) }}">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="submit" class="dropdown-item text-danger">Delete</button>
-                                                        </form>
-                                                    @else
-                                                        <form method="POST"
-                                                            action="{{ route('users.update', $user->id) }}">
-                                                            <button class="dropdown-item text-success" type="submit">Activate</button>
-                                                            @method('PUT')
+                                                            action="{{ route('users.edit', $user->id) }}">
+                                                            <button class="dropdown-item text-primary" type="submit">You will activate <br> User: {{ $user->name }}</button>
+                                                            @method('GET')
                                                             @csrf
                                                         </form>
                                                     @endif
                                                 </div>
                                             </div>
                                         </td>
-
                                     </tr>
                                 </tbody>
                                 @endif
+
+                                {{-- START DELETE MODAL --}}
+                                    <div class="modal" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"> 
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="Modal.com">Delete User</h4>
+                                                    <button id="close_" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</spam>
+                                                    </button>
+                                                </div>
+
+                                            <form>
+                                                <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label>Will you delete? {{$user->id}}</label>
+                                                            <!-- <input type="text" name="name" class="form-control" placeholder="Name: {{Auth::user()->name}}"> -->
+                                                        </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <form 
+                                                    method="POST"
+                                                    action="{{ route('users.destroy', $user->id) }}">
+                                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                                        @method('DELETE')
+                                                        @csrf id="close_" href="{{ route('users.index') }}
+                                                    </form>
+                                                    <form>
+                                                    <button class="btn btn-primary" onclick="myFunction()">No</button>
+                                                    </form>
+                                                </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{-- END DELETE MODAL--}}
                             @endforeach
                         </table>
                         {{$users->links()}}
@@ -114,5 +160,9 @@
                 </div>
             </div>
         </div>
+        
     @endsection
+
+
+
     
