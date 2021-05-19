@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\OrderProduct;
 use App\Models\Order;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -38,6 +41,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        dd("Hello World");
+        // return redirect('/orders')->with('message', $message);
     }
 
     /**
@@ -83,9 +88,41 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
         //
+        // dd($id);
+        $data = OrderProduct::find($id);
+        // dd($data);
+
+        $user = User::find(Auth::id());
+        // dd($user);
+        $user_id = $user->id;
+        $address = $user->address;
+        
+
+        $product = Product::find($data->product_id);
+        // dd($product->Price);
+
+        $total_price = $data->order_product_quantity * $product->Price;
+        // dd($total_price); 
+        $img = $product->img;
+        $quantity = $data->order_product_quantity;
+
+        $input = new Order();
+        $input->user_id = $user_id;
+        $input->product_id = $product->id;
+        $input->order_quantity_total = $data->order_product_quantity;
+        $input->order_price_total = $total_price;
+        $input->status = 'not delivered';
+        if($input->save()){
+
+            $data = Order::find(1);
+            return view('dashboards.user.orders.index', compact('total_price','quantity','img','address','data'));
+        }
+        // return redirect('/orders')->compact('total_price', $total_price);
+       dd("Error");
+
     }
 }
 

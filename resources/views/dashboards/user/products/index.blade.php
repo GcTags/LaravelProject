@@ -94,7 +94,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
   
-                  <form method="POST" action="{{ route('products.destroy', $product->id) }} ">
+                  <form method="POST" action="{{ route('products.destroy', $products->id) }} ">
                   @method('DELETE')
                   @csrf
                   <button type="submit" class="btn btn-danger">Yes</button>

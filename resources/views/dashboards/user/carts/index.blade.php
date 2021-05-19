@@ -63,7 +63,7 @@
                              
                                   </div>
                                 <div class="col-md">
-                                  <form method="POST" >
+                                  <form method="POST" action="{{route('orders.destroy', $orderProduct->id)}} ">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-success">Checkout</button>       
