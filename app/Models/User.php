@@ -6,9 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
+    use SoftDeletes;
     use HasFactory, Notifiable;
 
     /**
@@ -16,14 +18,19 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'name',
         'email',
+        'role',
         'address',
         'contact',
         'birthdate',
-        'password',
+        'password'
+   
     ];
+    protected $guarded = ['profile_pic'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -47,5 +54,13 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    public function OrderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -2,9 +2,15 @@
 
 use App\Models\Product;
 use Database\Seeders\ProductSeeder;
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Null_;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class HomeController extends Controller
 {
@@ -19,12 +25,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
 
+    public function __construct(User $user) 
     {
-        $products = DB::table('products')->get();
+        if (FALSE) 
+        {
+            $this->middleware(['auth','verified']);
+        }
+    }
+    
+    public function index()
+    {
+        $products = DB::table('products')->orderBy('created_at','desc')->get();
+
         // dd($products);
         return view('welcome', compact('products'));
-
     }
 }

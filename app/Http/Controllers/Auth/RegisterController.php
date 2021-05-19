@@ -52,7 +52,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:3', 'confirmed'],
             'address' => ['required', 'string', 'min:10'],
             'contact' => ['required','regex:/(09)[0-9]/', 'numeric','digits:11', 'unique:users'],
             'birthdate' => ['required', 'date'],
@@ -73,7 +73,16 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'address' => $data['address'],
             'contact' => $data['contact'],
-            'birthdate' => $data['birthdate'],
+            'birthdate' => $data['birthdate']
         ]);
+
+        if ('email' != null)
+        {
+            $message = "Account Created. Check email to login" ;
+            return redirect('/register')->with('message', $message);
+        }
+
+        $message = "Something went wrong" ;
+        return redirect('/register')->with('message', $message);
     }
 }
