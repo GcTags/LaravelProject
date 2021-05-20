@@ -12,9 +12,8 @@
           @endif
         </div>
               
-    
+             @if ($orders_product->isNotEmpty())
                 @foreach ($orders_product as $orderProduct )
-
                   <div class="col-md col-xl-10 mb-3">
                       <div class="card py-0">    
                         {{-- <a href="/products/{{$orderProduct->product_id}}" disabled> --}}
@@ -63,10 +62,9 @@
                              
                                   </div>
                                 <div class="col-md">
-                                  <form method="POST" >
-                                    @method('DELETE')
-                                    @csrf
+                                  <a href="/carts/{{ $orderProduct->id }}" class="text-dark">
                                     <button type="submit" class="btn btn-success">Checkout</button>       
+                                  </a>
                                   </div>
                                 </div>
                               </div>            
@@ -74,7 +72,14 @@
                           {{-- </a> --}}
                         </div>
                   </div>
-             @endforeach
+                  @endforeach
+                  @else
+                  <div class="card" style="width: 100%; height: 100%;">
+                      <div class="card-body text-center">
+                          <h1>Your Cart is Empty</h1>
+                      </div>
+                  </div>
+                  @endif
       </div>
   </div>
 </div>

@@ -33,11 +33,30 @@ class ProductController extends Controller
         }elseif(Auth::user()->role == 2)
         {
             $user = User::find(Auth::id());
-            $products = $user->products()->orderBy('created_at','desc')->get();
-            // dd($products);
-            return view('dashboards.user.products.index', compact('products'));
-        }
+            $count = $user->products()->where('ProductName','!=','')->count();
 
+            if($request){
+                $products = $user->products()
+                ->where([['ProductName','!=',Null],
+                    [function($query) use ($request) {
+                        if (($term = $request->term)) {
+                            $query->orWhere('ProductName','LIKE', '%' . $term . '%')->get();
+                        }
+                    }]
+                ])
+                    ->withTrashed()
+                    ->orderBy("id")
+                    ->paginate(10);
+                
+                    return view('dashboards.user.products.index', compact('products','count'))
+                    ->with('i', (request()->input('page', 1) -1) * 5);
+                }else{
+                    $products = $user->products()->orderBy('created_at','desc')->get();
+                    // dd($products);
+
+                    return view('dashboards.user.products.index', compact('products','count'));
+                }
+            }
     }
       
 
@@ -90,8 +109,14 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product = Product::find($product->id);
-        // dd($products);
-        return view('dashboards.user.products.show', compact('product'));
+        // dd($product);
+        if (Auth::user()->role == 1){
+            return view('dashboards.admin.products.show', compact('product'));
+
+        }elseif(Auth::user()->role == 2){
+            return view('dashboards.user.products.show', compact('product'));
+
+        }
     }
 
 
@@ -102,9 +127,14 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
-    {
+    {   
+        if (Auth::user()->role == 1){
+            return view('dashboards.admin.products.edit', compact('product'));
 
-        return view('dashboards.user.products.edit', compact('product'));
+        }elseif(Auth::user()->role == 2){
+            return view('dashboards.user.products.edit', compact('product'));
+
+        }
 
     }
 
@@ -127,7 +157,7 @@ class ProductController extends Controller
         $name = $product->Productname;
         $product = Product::find($product->id);
         $product->fill($request->all());
-      
+        // dd($product);
         if($product->save()){
             $message =  $name.''."Successfully Updated";
         }

@@ -16,13 +16,14 @@
                 @endif
 
                 
-                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('products.update', $product->id ) }}" enctype="multipart/form-data">
+                    @method('PATCH')
                     @csrf
                     <div class="form-group row">
                     <label for="ProductName" class="col-md-4 col-form-label text-md-right">{{ __('Product Name')}}</label>
                     
                         <div class="col-md-6">
-                            <input type="text" name="ProductName" id="ProductName" class="form-control @error('ProductName') is-invalid @enderror"  value="{{old('ProductName')}}"  autofocus>
+                            <input type="text" name="ProductName" id="ProductName" class="form-control @error('ProductName') is-invalid @enderror"  value="{{$product->ProductName}}"  autofocus>
 
                             @error('ProductName')
                                 <span class="invalid-feedback" role="alert">
@@ -38,7 +39,7 @@
                         <label for="ProductDescription" class="col-md-4 col-form-label text-md-right">{{ __('Description')}}</label>
                         
                             <div class="col-md-6">
-                                <textarea type="text" name="ProductDescription" id="ProductDescription" class="form-control  @error('ProductDescription') is-invalid @enderror" value="{{old('ProductDescription')}}"  autofocus>
+                                <textarea type="text" name="ProductDescription" id="ProductDescription" class="form-control  @error('ProductDescription') is-invalid @enderror" value="{{$product->ProductDescription}}"  autofocus>
                                 </textarea>
                                 @error('ProductDescription')
                                     <span class="invalid-feedback" role="alert">
@@ -52,7 +53,7 @@
                             <label for="Price" class="col-md-4 col-form-label text-md-right">{{ __('Price')}}</label>
                             
                                 <div class="col-md-6">
-                                    <textarea type="text" name="Price" id="Price" class="form-control  @error('Price') is-invalid @enderror" value="{{old('Price')}}"  autofocus>
+                                    <textarea type="text" name="Price" id="Price" class="form-control  @error('Price') is-invalid @enderror" value="{{$product->Price}}"  autofocus>
                                     </textarea>
                                     @error('Price')
                                         <span class="invalid-feedback" role="alert">
@@ -66,7 +67,7 @@
                                 <label for="Stock" class="col-md-4 col-form-label text-md-right">{{ __('Stock')}}</label>
                                 
                                     <div class="col-md-6">
-                                        <textarea type="text" name="Stock" id="Stock" class="form-control  @error('Stock') is-invalid @enderror" value="{{old('Stock')}}"  autofocus>
+                                        <textarea type="text" name="Stock" id="Stock" class="form-control  @error('Stock') is-invalid @enderror" value="{{$product->Stock}}"  autofocus>
                                         </textarea>
                                         @error('Stock')
                                             <span class="invalid-feedback" role="alert">

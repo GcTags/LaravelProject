@@ -22,21 +22,23 @@ class UserTableController extends Controller
         // $search = $request->input('term');
         // // dd($search);
         // return view('dashboards.admin.usertable.index', $users,compact('users'));
-
-        $users = User::where([
-            ['name','!=',Null],
-            [function($query) use ($request) {
-                if (($term = $request->term)) {
-                    $query->orWhere('name','LIKE', '%' . $term . '%')->get();
-                }
-            }]
-        ])
-            ->withTrashed()
-            ->orderBy("id")
-            ->paginate(10);
-
-            return view('dashboards.admin.usertable.index', $users,compact('users'))
-                ->with('i', (request()->input('page', 1) -1) * 5);
+        if(auth()->user()->role == 1){
+            $users = User::where([
+                ['name','!=',Null],
+                [function($query) use ($request) {
+                    if (($term = $request->term)) {
+                        $query->orWhere('name','LIKE', '%' . $term . '%')->get();
+                    }
+                }]
+            ])
+                ->withTrashed()
+                ->orderBy("id")
+                ->paginate(10);
+    
+                return view('dashboards.admin.usertable.index', $users,compact('users'))
+                    ->with('i', (request()->input('page', 1) -1) * 5);
+        }
+       
     }   
 
     /**
