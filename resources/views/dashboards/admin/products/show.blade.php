@@ -52,12 +52,12 @@
                                                 </div>
                                                 <input type="hidden" name="product_id" value="{{ $product->id}}"/>
                                             </div>
-                                        @auth
+                                        @if (Auth::user()->role === 2)                                       
                                         <div class="form-group row-md-2">
                                             <input  type="submit" class="btn btn-info" value="Add To Cart"> 
                                             <input type="submit" class="btn btn-warning" value="Buy">
                                         </div>
-                                        @endauth
+                                        @endif
                                     </form>
                                     </div>
                                 </div>

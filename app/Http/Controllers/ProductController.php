@@ -30,8 +30,8 @@ class ProductController extends Controller
                 return view('dashboards.admin.products.index', $products,compact('products'))
                     ->with('i', (request()->input('page', 1) -1) * 5);
 
-        }elseif(Auth::user()->role == 2)
-        {
+        }elseif(Auth::user()->role == 2){
+
             $user = User::find(Auth::id());
             $count = $user->products()->where('ProductName','!=','')->count();
 
@@ -110,13 +110,13 @@ class ProductController extends Controller
     {
         $product = Product::find($product->id);
         // dd($product);
-        if (Auth::user()->role == 1){
-            return view('dashboards.admin.products.show', compact('product'));
+        // if (Auth::user()->role == 1){
+        //     return view('dashboards.admin.products.show', compact('product'));
 
-        }elseif(Auth::user()->role == 2){
+        // }elseif(Auth::user()->role == 2){
             return view('dashboards.user.products.show', compact('product'));
 
-        }
+        // }
     }
 
 
@@ -148,7 +148,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'ProductName' => 'required|unique:products|max:255',
+            'ProductName' => 'required|max:255',
             'ProductDescription' => 'required',
             'Price' => 'required|numeric',
             'Stock' => 'required|numeric',
@@ -157,11 +157,11 @@ class ProductController extends Controller
         $name = $product->Productname;
         $product = Product::find($product->id);
         $product->fill($request->all());
-        dd($product);
+      
         if($product->save()){
             $message =  $name.''."Successfully Updated";
         }
-        return redirect('/products')->with('message', $message);
+        return redirect('products')->with('message', $message);
     }
 
     /**

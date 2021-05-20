@@ -18,10 +18,12 @@
                         <div class="column" style=" float:left;padding: 10px 0px">
                             <div class="card" style="top:-10px;width:550px;">
                                 <div id="chart-container"></div>
+                            </div>
+                        </div> 
                                 <!-- include 'C:\xampp\htdocs\LaravelProject\app\Http\Controllers\ChartController.php'; -->
                                 <script src="https://code.highcharts.com/highcharts.js"></script>
-                                <script>
-                                    var datas = <?php echo json_encode($new_user) ?>   
+                                <script type="text/javascript">
+                                    var datas = <?php echo json_encode($new_user)?>;   
                                     console.log(datas)
                                     Highcharts.chart('chart-container',{
                                         title:{
@@ -56,22 +58,20 @@
                                             rules:[
                                                 {
                                                     condition:{
-                                                        maxWidth:300
+                                                        maxWidth:500
                                                     },
                                                     chartOptions:{
                                                         legend:{
                                                             layout:'horizontal',
                                                             align:'center',
                                                             verticalAlign:'bottom'
-                                                        }
                                                     }
                                                 }
-                                            ]
+                                            }]
                                         }
                                     });
                                 </script>
-                            </div>
-                        </div> 
+                         
                     
                         <div class="column" style="float:right;padding: 0 10px;">          
                             <div class="card">

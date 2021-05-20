@@ -23,7 +23,7 @@
                                     <input class="form-control mr-sm-2" type="search" name="term"  placeholder="Search"
                                         aria-label="Search">
                                     <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-                                    <a style="margin-left:10px;" href="{{ route('users.index') }}" class=" mt-1">
+                                    <a style="margin-left:10px;" href="{{ route('products.index') }}" class=" mt-1">
                                         <!-- <i class="fa fa-refresh">I cant put icon for refresh</i> -->
                                         <!-- <i class="bi bi-arrow-counterclockwise"></i> -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
