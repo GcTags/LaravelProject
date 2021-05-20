@@ -22,7 +22,7 @@
                                 <script src="https://code.highcharts.com/highcharts.js"></script>
                                 <script>
                                     var datas = <?php echo json_encode($new_user) ?>   
-
+                                    console.log(datas)
                                     Highcharts.chart('chart-container',{
                                         title:{
                                             text:'ElectrOrder'
@@ -68,14 +68,14 @@
                                                 }
                                             ]
                                         }
-                                    })
+                                    });
                                 </script>
                             </div>
                         </div> 
                     
                         <div class="column" style="float:right;padding: 0 10px;">          
                             <div class="card">
-                                <canvas id="myChart" style="height:400px;width:520px;"></canvas>
+                                <div id="myChart" style="height:400px;width:520px;"></div>
                                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                                     <script>
                                     var ord_user = <?php echo json_encode(count($ord_user)) ?>;

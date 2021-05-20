@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="card" >
-                                            <div class="card-header">
+                                            <div class="card-header">   
                                                 <h2>
                                                     Php: {{$product->Price}}
                                                 </h2>

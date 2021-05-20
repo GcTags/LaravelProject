@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\OrderProduct;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -17,8 +19,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-        return view('dashboards.user.orders.index');
+        $user = User::find(Auth::id());
+        $orders = DB::table('orders')
+        ->join('products', 'orders.product_id', '=', 'products.id')
+        ->where('orders.user_id', '=', $user->id)
+        ->where('orders.deleted_at','=', NULL)
+        ->select('orders.*', 'products.img')
+        ->orderBy('orders.created_at','desc')
+        ->get();
+        // dd($orders);
+        // $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+    
+        return view('dashboards.user.orders.index', compact('orders'));
 
     }
 
@@ -40,10 +52,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd("Hello World");
-        // return redirect('/orders')->with('message', $message);
-    }
+        $request->validate([
+            'order_payment' => 'required',
+        ]);
+        $input = new Order();
+        $input->fill($request->all());
+        $input->user_id = auth()->user()->id;
+        $input->status = 'Sender is preparing to ship your parcel';
+        // dd($input);
+        if($input->save()){
+            $message = "Order Placed Successfully";
+        }
+        return redirect('/orders')->with('message', $message);
+        }
 
     /**
      * Display the specified resource.
@@ -90,39 +111,12 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
-        // dd($id);
-        $data = OrderProduct::find($id);
-        // dd($data);
-
-        $user = User::find(Auth::id());
-        // dd($user);
-        $user_id = $user->id;
-        $address = $user->address;
-        
-
-        $product = Product::find($data->product_id);
-        // dd($product->Price);
-
-        $total_price = $data->order_product_quantity * $product->Price;
-        // dd($total_price); 
-        $img = $product->img;
-        $quantity = $data->order_product_quantity;
-
-        $input = new Order();
-        $input->user_id = $user_id;
-        $input->product_id = $product->id;
-        $input->order_quantity_total = $data->order_product_quantity;
-        $input->order_price_total = $total_price;
-        $input->status = 'not delivered';
-        if($input->save()){
-
-            $data = Order::find(1);
-            return view('dashboards.user.orders.index', compact('total_price','quantity','img','address','data'));
+        $orderProduct = Order::find($id);
+        // dd($orderProduct);
+        if($orderProduct->delete()){
+            $message = "Product deleted from orders";
         }
-        // return redirect('/orders')->compact('total_price', $total_price);
-       dd("Error");
-
+        return redirect('/orders')->with('message', $message);  
     }
 }
 

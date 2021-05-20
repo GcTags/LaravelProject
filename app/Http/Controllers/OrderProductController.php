@@ -34,6 +34,25 @@ class OrderProductController extends Controller
 
     }
 
+    public function show($id)
+    {
+        $user = User::find(Auth::id());
+        $user_id = $user->id;
+        $address = $user->address;
+
+        $OrderProduct = OrderProduct::find($id);
+
+        $product = Product::find($OrderProduct->product_id);
+        $img = $product->img;
+        $productname = $product->ProductName;
+        $total_price = $OrderProduct->order_product_quantity * $product->Price;
+        $quantity = $OrderProduct->order_product_quantity;
+        $orderProduct = OrderProduct::find($id);
+        
+        $orderProduct->delete();
+        // dd($OrderProduct->id);
+        return view('dashboards.user.orders.show', compact('total_price','quantity','address','OrderProduct', 'product'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -59,6 +78,7 @@ class OrderProductController extends Controller
         $input = new OrderProduct();
         $input->fill($request->all());
         $input->user_id = auth()->user()->id;
+        // dd($input);
         if($input->save()){
             $message = "Product added to cart";
         }
