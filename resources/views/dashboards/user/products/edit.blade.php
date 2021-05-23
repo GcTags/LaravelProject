@@ -93,8 +93,8 @@
                             </div>
                         </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-danger btn-md btn-block" href="{{ route('products.index') }}">Exit</a>
-                    <button type="submit" class="btn btn-primary btn-md btn-block">Save Changes</button>                
+                    <a type="button" class="btn btn-danger btn-md" href="{{ route('products.index') }}">Exit</a>
+                    <button type="submit" class="btn btn-primary btn-md ">Save Changes</button>                
                 </div>
                 </form>
             </div>

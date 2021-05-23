@@ -411,52 +411,21 @@
     @section('content')
         <div class="container">
             <div class="row ">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/categories/laptop" >Laptops</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/categories/desktop" >Desktops</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/categories/component" >Components</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/aboutus" >About Us</a>
-                    </li>
-                </ul>
-
                 <div class="col-sm ">
-                        <div class="row justify-content-left">
-                            @if ($products->isNotEmpty())
-                            @foreach ($products as $product)
-                            <div class="col-sm col-md-3 mb-4 text-center">
-                                <a href="/products/{{ $product->id }}" class="text-dark">
-                                    <div class="card" style="width: 100%; height: 100%;">
-                                        <img src="{{ $product->img }}" alt="" style="width: 100%;">
-                                        <div class="card-body">
-                                            @if ($product->img != '')
-                                                <img class="rounded " src="{{ asset('/storage/img/' . $product->img) }}"
-                                                    style="width:150px; height: 100%;">
-                                            @endif
-                                        </div>
-                                        <div class="card-body">
-                                            <label> {{ $product->ProductName }}</label><br>
-                                            {{-- <label>{{ $product->ProductDescription }}</label> --}}
-                                            <label>Php {{ $product->Price }}</label>
-
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                          @endforeach
-                            @else
-                            <div class="card" style="width: 100%; height: 100%;">
-                                <div class="card-body text-center">
-                                    <h1>No Products Found</h1>
+                        <div class="row justify-content-center">
+                          <div class="card" style="width: 80%;">
+                              <div class="card-body">
+                                <div class="card-title text-center" >
+                                    <img src="{{ asset('/storage/img/icon.png') }}" width="250" height="150" alt="">
                                 </div>
-                            </div>
-                            @endif
+                                    <p style="font-size: 150%; text-align: justify;">
+                                    <span style="font-weight: bold; color: #fdea42;">ElectOrder</span> is an Application that focuses on e commerce that provides the necessary information and features that will connect the users by electronic products which is computer parts making it efficient and easy to approach. Targets the users accessing the internet and the goal of performance to acquire new consumers to use the application. And the scope of our application is the users that are family who have their children in online class because of this pandemic. And also, our application can cater also second-hand computer parts for those users who have limited budget in buying some computer parts.
+                                    </p>
+                              </div>
+                              <div class="footer">
+                                <h2 class="text-center" style="font-weight: bold">About Us</h2>
+                              </div>
+                          </div>
                         </div>
                     </div>
                 </div>

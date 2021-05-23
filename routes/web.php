@@ -9,7 +9,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserTableController;
-use App\Http\Controllers\ChartController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,10 +37,16 @@ Route::get('/home', function () {
 
 Route::resource('home', HomeController::class);
 Route::resource('orders', OrderController::class);
+Route::resource('sales', SaleController::class);
 Route::resource('carts', OrderProductController::class);
 Route::resource('products', ProductController::class);
 Route::resource('profile', ProfileController::class);
 Route::resource('users', UserTableController::class);
+Route::get('/categories/laptop',  [CategoryController::class, 'laptop']);
+Route::get('/categories/desktop',  [CategoryController::class, 'desktop']);
+Route::get('/categories/component',  [CategoryController::class, 'component']);
+Route::get('/aboutus',  [HomeController::class, 'aboutus']);
+
 
 Auth::routes(['verify' => true]);
 

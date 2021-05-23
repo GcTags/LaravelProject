@@ -76,13 +76,24 @@ class OrderProductController extends Controller
             'order_product_quantity' => 'required'
         ]);
         $input = new OrderProduct();
+
         $input->fill($request->all());
         $input->user_id = auth()->user()->id;
-        // dd($input);
+        // dd($product);
         if($input->save()){
+        
             $message = "Product added to cart";
         }
-        return redirect('/products/'.$input->product_id)->with('message', $message);
+        $product = new Product();
+        $product = Product::find($input->product_id);
+        $stock = $product->Stock;
+        $quantity = ($stock) - ($input->order_product_quantity);
+        $product->Stock = $quantity;
+        // dd($product);
+        if($product->save()){
+            return redirect('/products/'.$input->product_id)->with('message', $message);
+
+        }
 
     }
 

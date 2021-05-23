@@ -71,9 +71,10 @@ class ProductController extends Controller
    
         $request->validate([
             'ProductName' => 'required|unique:products|max:255',
-            'ProductDescription' => 'required',
-            'Price' => 'required|numeric',
-            'Stock' => 'required|numeric',
+            'ProductDescription' => 'required|min:5',
+            'Price' => 'required|numeric|min:1',
+            'Stock' => 'required|numeric|min:1',
+            'Category' => 'required',
             'Status' => 'required'
         ]);
 
@@ -109,14 +110,16 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product = Product::find($product->id);
-        // dd($product);
-        // if (Auth::user()->role == 1){
-        //     return view('dashboards.admin.products.show', compact('product'));
+        return view('dashboards.user.products.show', compact('product'));
 
-        // }elseif(Auth::user()->role == 2){
+        // dd($product);
+        if (Auth::user()->role == 1){
+            return view('dashboards.admin.products.show', compact('product'));
+
+        }elseif(Auth::user()->role == 2){
             return view('dashboards.user.products.show', compact('product'));
 
-        // }
+        }
     }
 
 

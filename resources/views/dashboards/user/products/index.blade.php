@@ -48,8 +48,10 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col-12">#</th>
+                                    <th scope="col-12">Image</th>
                                     <th scope="col-12">Product Name</th>
                                     <th scope="col-12">Product Description</th>
+                                    <th scope="col-12">Category</th>
                                     <th scope="col-12">Price</th>
                                     <th scope="col-12">Stock</th>
                                     <th scope="col-12">Status</th>
@@ -61,8 +63,15 @@
                                 <tbody>
                                     <tr>
                                         <td> {{ $i + 1 }} </td>
+                                        <td>
+                                            @if ($product->img != '')
+                                                    <img class="rounded " src="{{ asset('/storage/img/' . $product->img) }}"
+                                                        style="width:150px; height: 150px;">
+                                                @endif
+                                        </td>
                                         <td>{{ $product->ProductName }}</td>
                                         <td>{{ $product->ProductDescription }}</td>
+                                        <td>{{ $product->Category }}</td>
                                         <td>{{ $product->Price }}</td>
                                         <td>{{ $product->Stock }}</td>
                                         <td>{{ $product->Status }}</td>
@@ -79,11 +88,11 @@
                                                         <form method="POST" action="{{ route('products.destroy', $product->id) }} ">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <a type="submit" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter"  style="width:100%;">Delete</a>       
+                                                        <a type="submit" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter"  style="width:100%;">Delete</a>       
             
                 
                                                     </li>
-                                                    <li><a type="button" class="btn button btn-info"
+                                                    <li><a type="button" class="btn button btn-outline-info"
                                                           href="/products/{{$product->id}}/edit" style="width:100%;">Edit</a>
                                                     </li>
                                                 </ul>

@@ -13,8 +13,7 @@
                         <img src="{{asset('/storage/img/'.$product->img)}}" style="width:20%;">
                         @endif
                     </div>
-                    <form method="POST" action="{{ route('products.update', $product->id) }}"
-                        enctype="multipart/form-data">
+                    <form  action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @method('PATCH')
                         @csrf
                         <div class="form-group row">
@@ -94,9 +93,10 @@
                             </div>
                         </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-danger" href="{{ route('products.index') }}">Exit</a>
-                    <button type="submit" class="btn btn-primary">Save Chanes</button>
+                    <a type="button" class="btn btn-danger btn-md " href="{{ route('products.index') }}">Exit</a>
+                    <button type="submit" class="btn btn-primary btn-md ">Save Changes</button>                
                 </div>
+                </form>
             </div>
         </div>
     </div>

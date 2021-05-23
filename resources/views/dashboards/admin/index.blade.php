@@ -23,6 +23,8 @@
                                 <!-- include 'C:\xampp\htdocs\LaravelProject\app\Http\Controllers\ChartController.php'; -->
                                 <script src="https://code.highcharts.com/highcharts.js"></script>
                                 <script type="text/javascript">
+                                $(document).ready(function(){
+
                                     var datas = <?php echo json_encode($new_user)?>;   
                                     console.log(datas)
                                     Highcharts.chart('chart-container',{
@@ -70,14 +72,17 @@
                                             }]
                                         }
                                     });
+                                });
                                 </script>
                          
                     
                         <div class="column" style="float:right;padding: 0 10px;">          
                             <div class="card">
-                                <div id="myChart" style="height:400px;width:520px;"></div>
+                                <canvas id="myChart" style="height:400px;width:520px;"></canvas>
                                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                                    <script>
+                                    <script type="text/javascript">
+                                    $(document).ready(function(){
+
                                     var ord_user = <?php echo json_encode(count($ord_user)) ?>;
                                     var pro_user = <?php echo json_encode(count($pro_user)) ?>;
                                     var act_user = <?php echo json_encode(count($act_user)) ?>;
@@ -110,6 +115,7 @@
                                             }
                                         }
                                     });
+                                });
                                     </script>
                             </div>
                         </div>
