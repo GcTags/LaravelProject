@@ -36,9 +36,24 @@ class HomeController extends Controller
     
     public function index()
     {
-        $products = DB::table('products')->orderBy('created_at','desc')->get();
+        $products = DB::table('products')
+        ->where('Stock','!=','0')
+        ->orderBy('created_at','desc')->get();
 
         // dd($products);
         return view('welcome', compact('products'));
+    }
+
+    public function aboutus()
+    {
+        if (Auth::user()->role == 1) {
+
+            return view('aboutus');
+
+        } elseif (Auth::user()->role == 2) {
+
+            return view('aboutus');
+
+        }
     }
 }

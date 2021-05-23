@@ -52,6 +52,8 @@
                         <table class="table caption-top">
                             <thead class="thead-dark">
                                 <tr>
+                                    <th scope="col-12">#</th>
+                                    <th scope="col-12">Image</th>
                                     <th scope="col-12">Product Name</th>
                                     <th scope="col-12">Product Description</th>
                                     <th scope="col-12">Price</th>
@@ -61,10 +63,16 @@
                                     <th scope="col-12">Action</th>
                                 </tr>
                             </thead>
-                            @foreach ($products as $product)
+                            @foreach ($products as $i => $product)
                                 <tbody>
                                     <tr>
-
+                                        <td> {{ $i + 1 }} </td>
+                                        <td>
+                                            @if ($product->img != '')
+                                                    <img class="rounded " src="{{ asset('/storage/img/' . $product->img) }}"
+                                                        style="width:150px; height: 150px;">
+                                                @endif
+                                        </td>
                                         <td>{{ $product->ProductName }}</td>
                                         <td>{{ $product->ProductDescription }}</td>
                                         <td>{{ $product->Price }}</td>

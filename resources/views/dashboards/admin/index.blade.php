@@ -18,11 +18,15 @@
                         <div class="column" style=" float:left;padding: 10px 0px">
                             <div class="card" style="top:-10px;width:550px;">
                                 <div id="chart-container"></div>
+                            </div>
+                        </div> 
                                 <!-- include 'C:\xampp\htdocs\LaravelProject\app\Http\Controllers\ChartController.php'; -->
                                 <script src="https://code.highcharts.com/highcharts.js"></script>
-                                <script>
-                                    var datas = <?php echo json_encode($new_user) ?>   
+                                <script type="text/javascript">
+                                $(document).ready(function(){
 
+                                    var datas = <?php echo json_encode($new_user)?>;   
+                                    console.log(datas)
                                     Highcharts.chart('chart-container',{
                                         title:{
                                             text:'ElectrOrder'
@@ -56,28 +60,29 @@
                                             rules:[
                                                 {
                                                     condition:{
-                                                        maxWidth:300
+                                                        maxWidth:500
                                                     },
                                                     chartOptions:{
                                                         legend:{
                                                             layout:'horizontal',
                                                             align:'center',
                                                             verticalAlign:'bottom'
-                                                        }
                                                     }
                                                 }
-                                            ]
+                                            }]
                                         }
-                                    })
+                                    });
+                                });
                                 </script>
-                            </div>
-                        </div> 
+                         
                     
                         <div class="column" style="float:right;padding: 0 10px;">          
                             <div class="card">
                                 <canvas id="myChart" style="height:400px;width:520px;"></canvas>
                                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                                    <script>
+                                    <script type="text/javascript">
+                                    $(document).ready(function(){
+
                                     var ord_user = <?php echo json_encode(count($ord_user)) ?>;
                                     var pro_user = <?php echo json_encode(count($pro_user)) ?>;
                                     var act_user = <?php echo json_encode(count($act_user)) ?>;
@@ -110,6 +115,7 @@
                                             }
                                         }
                                     });
+                                });
                                     </script>
                             </div>
                         </div>

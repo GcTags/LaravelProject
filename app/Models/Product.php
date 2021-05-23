@@ -10,7 +10,7 @@ class Product extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['ProductName','ProductDescription','Price','Stock','Status','user_id'];
+    protected $fillable = ['ProductName','ProductDescription','Price','Stock','Category','Status','user_id'];
     protected $guarded = ['img'];
 
 

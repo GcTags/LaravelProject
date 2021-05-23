@@ -30,14 +30,33 @@ class ProductController extends Controller
                 return view('dashboards.admin.products.index', $products,compact('products'))
                     ->with('i', (request()->input('page', 1) -1) * 5);
 
-        }elseif(Auth::user()->role == 2)
-        {
-            $user = User::find(Auth::id());
-            $products = $user->products()->orderBy('created_at','desc')->get();
-            // dd($products);
-            return view('dashboards.user.products.index', compact('products'));
-        }
+        }elseif(Auth::user()->role == 2){
 
+            $user = User::find(Auth::id());
+            $count = $user->products()->where('ProductName','!=','')->count();
+
+            if($request){
+                $products = $user->products()
+                ->where([['ProductName','!=',Null],
+                    [function($query) use ($request) {
+                        if (($term = $request->term)) {
+                            $query->orWhere('ProductName','LIKE', '%' . $term . '%')->get();
+                        }
+                    }]
+                ])
+                    ->withTrashed()
+                    ->orderBy("id")
+                    ->paginate(10);
+                
+                    return view('dashboards.user.products.index', compact('products','count'))
+                    ->with('i', (request()->input('page', 1) -1) * 5);
+                }else{
+                    $products = $user->products()->orderBy('created_at','desc')->get();
+                    // dd($products);
+
+                    return view('dashboards.user.products.index', compact('products','count'));
+                }
+            }
     }
       
 
@@ -52,9 +71,10 @@ class ProductController extends Controller
    
         $request->validate([
             'ProductName' => 'required|unique:products|max:255',
-            'ProductDescription' => 'required',
-            'Price' => 'required|numeric',
-            'Stock' => 'required|numeric',
+            'ProductDescription' => 'required|min:5',
+            'Price' => 'required|numeric|min:1',
+            'Stock' => 'required|numeric|min:1',
+            'Category' => 'required',
             'Status' => 'required'
         ]);
 
@@ -90,8 +110,16 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product = Product::find($product->id);
-        // dd($products);
         return view('dashboards.user.products.show', compact('product'));
+
+        // dd($product);
+        if (Auth::user()->role == 1){
+            return view('dashboards.admin.products.show', compact('product'));
+
+        }elseif(Auth::user()->role == 2){
+            return view('dashboards.user.products.show', compact('product'));
+
+        }
     }
 
 
@@ -102,9 +130,14 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
-    {
+    {   
+        if (Auth::user()->role == 1){
+            return view('dashboards.admin.products.edit', compact('product'));
 
-        return view('dashboards.user.products.edit', compact('product'));
+        }elseif(Auth::user()->role == 2){
+            return view('dashboards.user.products.edit', compact('product'));
+
+        }
 
     }
 
@@ -118,7 +151,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'ProductName' => 'required|unique:products|max:255',
+            'ProductName' => 'required|max:255',
             'ProductDescription' => 'required',
             'Price' => 'required|numeric',
             'Stock' => 'required|numeric',
@@ -131,7 +164,7 @@ class ProductController extends Controller
         if($product->save()){
             $message =  $name.''."Successfully Updated";
         }
-        return redirect('/products')->with('message', $message);
+        return redirect('products')->with('message', $message);
     }
 
     /**

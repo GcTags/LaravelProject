@@ -25,7 +25,7 @@ class AdminController extends Controller
         $new_user = array(0,0,0,0,0,0,0,0,0,0,0,0);
         foreach($months as $index => $month)
         {
-            $new_user[$month] = $users[$index];
+            $new_user[$month-1] = $users[$index];
         }
         $ord_user = OrderProduct::select(DB::raw("user_id ,COUNT(*)"))
                     ->groupBy(DB::raw("user_id"))

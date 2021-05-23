@@ -9,10 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'ElectrOrder') }}</title>
-
+    {{-- <link rel="shortcut icon" href="{{ asset('icon.ico') }}"> --}}
+    <link rel="icon" type="image/png" src="{{ asset('/storage/img/icon.png') }}">
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -36,6 +38,7 @@
         <nav class="navbar navbar-expand-lg py-1 navbar-light sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('/storage/img/icon.png') }}" width="80" height="50" alt="">
                 {{ config('app.name', 'ElectrOrder') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -136,6 +139,9 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('products.index') }}">
                                             {{ __('My Products') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('sales.index') }}">
+                                            {{ __('My Sales') }}
                                         </a>
                                         <a class="dropdown-item" href="#" id="profile_btn">
                                             {{ __('My Profile') }}

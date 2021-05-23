@@ -13,8 +13,7 @@
                         <img src="{{asset('/storage/img/'.$product->img)}}" style="width:20%;">
                         @endif
                     </div>
-                    <form method="POST" action="{{ route('products.update', $product->id) }}"
-                        enctype="multipart/form-data">
+                    <form  action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @method('PATCH')
                         @csrf
                         <div class="form-group row">
@@ -93,29 +92,9 @@
                                 @enderror
                             </div>
                         </div>
-{{-- 
-                        <div class="form-group row">
-                            <label for="img" class="col-sm-3 col-form-label ">{{ __('Post Image') }}</label>
-
-                            <div class="col-sm-9">
-                                <input type="file" name="img" id="img"
-                                    class="form-control-file @error('img') is-invalid @enderror" value="" autofocus>
-
-                                @error('img')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-
-                                @enderror
-                            </div>
-                         
-                        </div> --}}
-
-
-                </div>
                 <div class="modal-footer">
-                    <a type="button" class="btn btn-danger" href="{{ route('products.index') }}">Exit</a>
-                    <button type="submit" class="btn btn-primary">Save Chanes</button>
+                    <a type="button" class="btn btn-danger btn-md" href="{{ route('products.index') }}">Exit</a>
+                    <button type="submit" class="btn btn-primary btn-md ">Save Changes</button>                
                 </div>
                 </form>
             </div>

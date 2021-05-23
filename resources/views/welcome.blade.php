@@ -436,16 +436,16 @@
             <div class="row ">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Laptops</a>
+                        <a class="nav-link active" href="/categories/laptop" >Laptops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Desktops</a>
+                        <a class="nav-link" href="/categories/desktop" >Desktops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Compontents</a>
+                        <a class="nav-link" href="/categories/component" >Components</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">About</a>
+                        <a class="nav-link active" href="/aboutus" >About Us</a>
                     </li>
                 </ul>
 
