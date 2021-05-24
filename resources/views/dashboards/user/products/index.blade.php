@@ -55,6 +55,8 @@
                                     <th scope="col-12">Price</th>
                                     <th scope="col-12">Stock</th>
                                     <th scope="col-12">Status</th>
+                                    <th scope="col-12">Created At</th>
+                                    <th scope="col-12">Updated On</th>
                                     <th scope="col-12">Action</th>
                                 </tr>
                             </thead>
@@ -75,6 +77,8 @@
                                         <td>{{ $product->Price }}</td>
                                         <td>{{ $product->Stock }}</td>
                                         <td>{{ $product->Status }}</td>
+                                        <td>{{ $product->created_at }}</td>
+                                        <td>{{ $product->updated_at }}</td>
                                         <td>
 
                                             <div class="dropdown">

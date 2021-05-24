@@ -493,7 +493,7 @@
                             @foreach ($products as $product)
                                 <div class="col-sm col-md-3 mb-4 text-center">
                                     <a href="/products/{{ $product->id }}" class="text-dark">
-                                        <div class="card" style="width: 100%; height: 100%;">
+                                        <div class="card " style="width: 100%; height: 100%;">
                                             <img src="{{ $product->img }}" alt="" style="width: 100%;">
                                             <div class="card-body">
                                                 @if ($product->img != '')

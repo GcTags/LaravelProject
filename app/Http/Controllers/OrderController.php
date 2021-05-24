@@ -21,17 +21,16 @@ class OrderController extends Controller
     {
         $user = User::find(Auth::id());
         $orders = DB::table('orders')
-        ->join('products', 'orders.product_id', '=', 'products.id')
-        ->where('orders.user_id', '=', $user->id)
-        ->where('orders.deleted_at','=', NULL)
-        ->select('orders.*', 'products.img')
-        ->orderBy('orders.created_at','desc')
-        ->get();
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->where('orders.user_id', '=', $user->id)
+            ->where('orders.deleted_at', '=', NULL)
+            ->select('orders.*', 'products.img')
+            ->orderBy('orders.created_at', 'desc')
+            ->get();
         // dd($orders);
         // $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
-    
-        return view('dashboards.user.orders.index', compact('orders'));
 
+        return view('dashboards.user.orders.index', compact('orders'));
     }
 
     /**
@@ -60,11 +59,11 @@ class OrderController extends Controller
         $input->user_id = auth()->user()->id;
         $input->status = 'Sender is preparing to ship your parcel';
         // dd($input);
-        if($input->save()){
+        if ($input->save()) {
             $message = "Order Placed Successfully";
         }
         return redirect('/orders')->with('message', $message);
-        }
+    }
 
     /**
      * Display the specified resource.
@@ -113,10 +112,9 @@ class OrderController extends Controller
     {
         $orderProduct = Order::find($id);
         // dd($orderProduct);
-        if($orderProduct->delete()){
+        if ($orderProduct->delete()) {
             $message = "Product deleted from orders";
         }
-        return redirect('/orders')->with('message', $message);  
+        return redirect('/orders')->with('message', $message);
     }
 }
-

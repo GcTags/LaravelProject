@@ -46,14 +46,7 @@ class HomeController extends Controller
 
     public function aboutus()
     {
-        if (Auth::user()->role == 1) {
-
-            return view('aboutus');
-
-        } elseif (Auth::user()->role == 2) {
-
-            return view('aboutus');
-
-        }
+        return view('aboutus');
+        
     }
 }

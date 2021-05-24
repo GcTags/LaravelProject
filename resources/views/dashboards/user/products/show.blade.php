@@ -55,7 +55,9 @@
                                         @auth
                                         <div class="form-group row-md-2">
                                             <input  type="submit" class="btn btn-info" value="Add To Cart"> 
-                                            <input type="submit" class="btn btn-warning" value="Buy">
+                                            <a href="/carts/{{ $product->id }}" class="text-dark">
+                                            <input class="btn btn-warning" value="Buy">
+                                            </a>
                                         </div>
                                         @endauth
                                     </form>
