@@ -35,6 +35,7 @@
                                         <p>Price: {{ $orderProduct->Price }} </p>
                                         <p>Quantity: {{ $orderProduct->order_product_quantity }}</p>
                                         <p>Total Number: {{ $count }}</p>
+                                        <p>Added Date: {{ $orderProduct->created_at}} </p>
 
                                     </div>
                                     <div class="row">

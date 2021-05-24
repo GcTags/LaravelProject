@@ -18,72 +18,33 @@ class CategoryController extends Controller
      */
     public function laptop()
     {
-        if (Auth::user()->role == 1) {
+        $products = DB::table('products')
+        ->where('Category', '=', 'Laptops')
+        ->orderBy('created_at', 'desc')->get();
 
-            $products = DB::table('products')
-                ->where('Category', '=', 'Laptops')
-                ->orderBy('created_at', 'desc')->get();
+        return view('search', compact('products'));
 
-            // dd($products);
-            return view('search', compact('products'));
-        } elseif (Auth::user()->role == 2) {
-
-            $user = User::find(Auth::id());
-            // $count = $user->products()->where('ProductName','!=','')->count();
-
-            $products = DB::table('products')
-                ->where('Category', '=', 'Laptops')
-                ->orderBy('created_at', 'desc')->get();
-
-            // dd($products);
-            return view('search', compact('products'));
-        }
     }
 
     public function desktop()
     {
-        if (Auth::user()->role == 1) {
+        $products = DB::table('products')
+        ->where('Category', '=', 'Desktops')
+        ->orderBy('created_at', 'desc')->get();
 
-            $products = DB::table('products')
-                ->where('Category', '=', 'Desktops')
-                ->orderBy('created_at', 'desc')->get();
+        return view('search', compact('products'));
 
-            // dd($products);
-            return view('search', compact('products'));
-        } elseif (Auth::user()->role == 2) {
-
-            $user = User::find(Auth::id());
-            // $count = $user->products()->where('ProductName','!=','')->count();
-
-            $products = DB::table('products')
-                ->where('Category', '=', 'Desktops')
-                ->orderBy('created_at', 'desc')->get();
-
-            // dd($products);
-            return view('search', compact('products'));
-        }
+        
     }
     public function component()
     {
-        if (Auth::user()->role == 1) {
+        
+        $products = DB::table('products')
+        ->where('Category', '=', 'Components')
+        ->orderBy('created_at', 'desc')->get();
 
-            $products = DB::table('products')
-                ->where('Category', '=', 'Components')
-                ->orderBy('created_at', 'desc')->get();
+        return view('search', compact('products'));
 
-            // dd($products);
-            return view('search', compact('products'));
-        } elseif (Auth::user()->role == 2) {
-
-            $user = User::find(Auth::id());
-            // $count = $user->products()->where('ProductName','!=','')->count();
-
-            $products = DB::table('products')
-                ->where('Category', '=', 'Components')
-                ->orderBy('created_at', 'desc')->get();
-
-            // dd($products);
-            return view('search', compact('products'));
-        }
+ 
     }
 }

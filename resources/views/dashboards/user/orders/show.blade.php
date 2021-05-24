@@ -24,8 +24,8 @@
                                             <h2  class="mb-4">{{ $product->ProductName }}</h2>
                                             <h5>Total Quantity: <span style="font-weight: bold">{{ $quantity }}</span> </h5>
                                             <h5>Total Price:<span style="font-weight: bold"> {{ $total_price }} </span></h5>
-    
-                                    
+                                            <h5>Delivery Date:<span style="font-weight: bold"> {{ $delivery_date }} </span></h5>
+
                                     
                                                 @if ($address != '')
     
@@ -35,7 +35,7 @@
     
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepen">
-                                                          <label class="input-group-text" for="order_payment">Mode of order_payment</label>
+                                                          <label class="input-group-text" for="order_payment">Mode of Payment</label>
                                                         </div>
                                                         <select name="order_payment" class="custom-select" id="order_payment" lass="form-control @error('order_payment') is-invalid @enderror"  value="{{old('order_payment')}}"  autofocus>
                                                           {{-- <option selected>Choose...</option> --}}
@@ -46,9 +46,10 @@
                                                             <strong>{{$message}}</strong>
                                                         </span>
                                                         
-                                                    @enderror
+                                                          @enderror
                                                       </div>
 
+                                                    <input type="hidden" name="order_delivery_date" value="{{ $delivery_date}}"/>
                                                     <input type="hidden" name="order_address" value="{{ $address}}" />
                                                     <input type="hidden" name="order_quantity_total" value="{{ $quantity}}" />
                                                     <input type="hidden" name="order_price_total" value="{{ $total_price}}"/>

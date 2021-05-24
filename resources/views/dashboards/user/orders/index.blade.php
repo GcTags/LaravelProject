@@ -42,6 +42,9 @@
                                                 style="font-weight: bold">{{ $order->order_address }}</span></p>
 
                                         <p>Delivery Status: <span style="font-weight: bold">{{ $order->status }}</span></p>
+                                        
+                                        <p>Ordered Date: <span style="font-weight: bold">{{ $order->created_at }}</span></p>
+                                        <p>Delivery Date: <span style="font-weight: bold">{{ $order->order_delivery_date }}</span></p>
 
                                         {{-- <p>Total Number: {{$count}}</p> --}}
 

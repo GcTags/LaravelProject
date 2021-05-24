@@ -1,6 +1,7 @@
 <?php
 //Cart 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Models\OrderProduct;
 use App\Models\Product;
@@ -47,11 +48,13 @@ class OrderProductController extends Controller
         $productname = $product->ProductName;
         $total_price = $OrderProduct->order_product_quantity * $product->Price;
         $quantity = $OrderProduct->order_product_quantity;
+        $delivery_date = Carbon::now();
+        $delivery_date->addDays(3);
         $orderProduct = OrderProduct::find($id);
         
         $orderProduct->delete();
         // dd($OrderProduct->id);
-        return view('dashboards.user.orders.show', compact('total_price','quantity','address','OrderProduct', 'product'));
+        return view('dashboards.user.orders.show', compact('total_price','quantity','address','OrderProduct','delivery_date', 'product'));
     }
     /**
      * Show the form for creating a new resource.
@@ -73,7 +76,7 @@ class OrderProductController extends Controller
     {
         //
         $request->validate([
-            'order_product_quantity' => 'required'
+            'order_product_quantity' => 'required|numeric|min:1'
         ]);
         $input = new OrderProduct();
 

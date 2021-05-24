@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class Deliverydate extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        //
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dateTime('order_delivery_date')->nullable();
         });
     }
 
@@ -26,6 +26,8 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('order_delivery_date');
+        });
     }
 }
