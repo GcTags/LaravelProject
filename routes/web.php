@@ -27,6 +27,9 @@ use App\Http\Controllers\CategoryController;
 Route::middleware(['middleware'=>'PreventBackHistory'])->group(function () {
     Auth::routes();
 });
+Route::get('/canceled',[ OrderController::class, 'canceled'])->name('canceled');;
+Route::get('/received',[ OrderController::class, 'received'])->name('received');;
+Route::get('/transit',[ OrderController::class, 'transit'])->name('transit');;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/search/', [ProductController::class, 'search'])->name('search');

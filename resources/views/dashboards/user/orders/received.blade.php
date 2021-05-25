@@ -4,54 +4,77 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md col-xl-10 mb-3">
-                <div class="card bg-warning">
+                <div class="card">
                     <div class="card-body text-center">
-                        <h3>My Cart</h3>
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col">
-                                        <h3>Total Items: {{ $count }}</h3>
-                                    </div>
-                                    <div class="col">
-                                        <h3>Total Price: {{ $total_price }}</h3>
-                                    </div>
-                                </div>
-                        </div>
+                        <h3>My Placed Orders</h3>
                     </div>
                 </div>
             </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+                <div class="collapse navbar-collapse " id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.index') }}">In Progress </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/transit">In Transit</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/received">Received</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link"  href="/canceled">Canceled<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
             <div class="col-md col-xl-10 mb-3">
                 @if (session('message'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-success">
                         {{ session('message') }}
                     </div>
                 @endif
             </div>
 
-            @if ($orders_product->isNotEmpty())
-       
-                @foreach ($orders_product as $orderProduct)
+            @if ($orders->isNotEmpty())
+
+                @foreach ($orders as $order)
+
                     <div class="col-md col-xl-10 mb-3">
                         <div class="card py-0">
-                            {{-- <a href="/products/{{$orderProduct->product_id}}" disabled> --}}
+                            {{-- <a href="/products/{{$order->product_id}}" disabled> --}}
                             <div class="card-body">
                                 <div class="row">
 
                                     <div class="col-md">
-                                        @if ($orderProduct->img != '')
-                                            <img src="{{ asset('/storage/img/' . $orderProduct->img) }}" style="width:40%;">
+                                        @if ($order->img != '')
+                                            <img src="{{ asset('/storage/img/' . $order->img) }}" style="width:50%;">
                                         @endif
                                     </div>
                                     <div class="col-md">
-                                        <p>Price: {{ $orderProduct->Price }} </p>
-                                        <p>Quantity: {{ $orderProduct->order_product_quantity }}</p>
-                                        <p>Added Date: {{ $orderProduct->created_at}} </p>
+                                        <p>Total Price: <span
+                                                style="font-weight: bold">{{ $order->order_price_total }}</span> </p>
+                                        <p>Total Quantity: <span
+                                                style="font-weight: bold">{{ $order->order_quantity_total }}</span></p>
+                                        <p>Delivery Address: <span
+                                                style="font-weight: bold">{{ $order->order_address }}</span></p>
+
+                                        <p>Delivery Status: <span style="font-weight: bold">{{ $order->status }}</span>
+                                        </p>
+
+                                        <p>Ordered Date: <span style="font-weight: bold">{{ $order->created_at }}</span>
+                                        </p>
+                                        <p>Delivery Date: <span
+                                                style="font-weight: bold">{{ $order->order_delivery_date }}</span></p>
+
+                                        {{-- <p>Total Number: {{$count}}</p> --}}
 
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                data-target="#exampleModalCenter">Delete</button>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#exampleModalCenter">Cancel</button>
 
                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -64,14 +87,16 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body text-center">
-                                                            Wish to delete this Product?
+                                                            Deleting in-processed orders may reflect to your bad
+                                                            credibility,
+                                                            Wish to Cancel this Product?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Close</button>
 
                                                             <form method="POST"
-                                                                action="{{ route('carts.destroy', $orderProduct->id) }} ">
+                                                                action="{{ route('orders.destroy', $order->id) }} ">
                                                                 @method('DELETE')
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-danger">Yes</button>
@@ -83,11 +108,6 @@
 
 
                                         </div>
-                                        <div class="col-md">
-                                            <a href="/carts/{{ $orderProduct->id }}" class="text-dark">
-                                                <button type="submit" class="btn btn-success">Checkout</button>
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,9 +116,9 @@
                     </div>
                 @endforeach
             @else
-                <div class="card" style="width: 100%; height: 100%;">
+                <div class="col-md col-xl-10 mb-3">
                     <div class="card-body text-center">
-                        <h1>Your Cart is Empty</h1>
+                        <h1>Your Placed Orders is Empty</h1>
                     </div>
                 </div>
             @endif

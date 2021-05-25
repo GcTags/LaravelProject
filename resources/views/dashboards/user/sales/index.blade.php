@@ -13,12 +13,16 @@
 
 
                 <div class="card">
+                    <div class="card-body text-center">
+                        <h3>List of Sales<h3>
+
+                    </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-8">
                                 <a class="btn button btn-info" href="/products/create">Add New Product</a>
                             </div>
-                            <div class="col-12">
+                            <div class="col-md">
                                 <form class="form-inline my-2 my-lg"  action="{{ route('sales.index') }}">
                                     <input class="form-control mr-sm-2" type="search" name="term"  placeholder="Search"
                                         aria-label="Search">
@@ -42,8 +46,6 @@
               
 
                     <div class="card-body">
-
-                        <caption>List of Sales</caption>
                         <table class="table caption-top">
                             <thead class="thead-dark">
                                 <tr>
@@ -87,7 +89,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                                                     <li>
-                                                        <form method="POST" action="{{ route('products.destroy', $sale->id) }} ">
+                                                        <form method="POST" action="{{ route('sales.destroy', $sale->id) }} ">
                                                         @method('DELETE')
                                                         @csrf
                                                         <a type="submit" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter"  style="width:100%;">Delete</a>       
