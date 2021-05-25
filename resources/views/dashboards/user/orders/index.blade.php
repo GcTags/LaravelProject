@@ -10,6 +10,25 @@
                     </div>
                 </div>
             </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+                <div class="collapse navbar-collapse " id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link"href="{{ route('orders.index') }}">In Progress <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/transit">In Transit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/received">Received</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="/canceled">Canceled</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
             <div class="col-md col-xl-10 mb-3">
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -41,10 +60,13 @@
                                         <p>Delivery Address: <span
                                                 style="font-weight: bold">{{ $order->order_address }}</span></p>
 
-                                        <p>Delivery Status: <span style="font-weight: bold">{{ $order->status }}</span></p>
-                                        
-                                        <p>Ordered Date: <span style="font-weight: bold">{{ $order->created_at }}</span></p>
-                                        <p>Delivery Date: <span style="font-weight: bold">{{ $order->order_delivery_date }}</span></p>
+                                        <p>Delivery Status: <span style="font-weight: bold">{{ $order->status }}</span>
+                                        </p>
+
+                                        <p>Ordered Date: <span style="font-weight: bold">{{ $order->created_at }}</span>
+                                        </p>
+                                        <p>Delivery Date: <span
+                                                style="font-weight: bold">{{ $order->order_delivery_date }}</span></p>
 
                                         {{-- <p>Total Number: {{$count}}</p> --}}
 
@@ -52,7 +74,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#exampleModalCenter">Delete</button>
+                                                data-target="#exampleModalCenter">Cancel</button>
 
                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

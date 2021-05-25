@@ -111,10 +111,68 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $orderProduct = Order::find($id);
+        // $orderProduct = $orderProduct->status;
+        // $orderProduct->status = "Canceled";
         // dd($orderProduct);
         if ($orderProduct->delete()) {
             $message = "Product deleted from orders";
         }
-        return redirect('/orders')->with('message', $message);
+
+        $status = "Canceled";
+        $orderProduct->Status = $status;
+        // dd($orderProduct);
+        if($orderProduct->save()){
+            return redirect('/orders')->with('message', $message);
+
+        }
+    }
+
+
+
+    public function canceled()
+    {
+        $user = User::find(Auth::id());
+        $orders = DB::table('orders')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->where('orders.user_id', '=', $user->id)
+            ->where('orders.deleted_at', '!=', NULL)
+            ->select('orders.*', 'products.img')
+            ->orderBy('orders.created_at', 'desc')
+            ->get();
+        // dd($orders);
+        // $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+
+        return view('dashboards.user.orders.canceled', compact('orders'));
+    }
+    public function received()
+    {
+        $user = User::find(Auth::id());
+        $orders = DB::table('orders')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->where('orders.user_id', '=', $user->id)
+            // ->where('orders.deleted_at', '=', NULL)
+            ->where('orders.status', '=', 'Recieved')
+            ->select('orders.*', 'products.img')
+            ->orderBy('orders.created_at', 'desc')
+            ->get();
+        // dd($orders);
+        // $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+        return view('dashboards.user.orders.received', compact('orders'));
+
+    }
+    public function transit()
+    {
+        $user = User::find(Auth::id());
+        $orders = DB::table('orders')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->where('orders.user_id', '=', $user->id)
+            // ->where('orders.deleted_at', '=', NULL)
+            ->where('orders.status', '=', 'In Transit')
+            ->select('orders.*', 'products.img')
+            ->orderBy('orders.created_at', 'desc')
+            ->get();
+        // dd($orders);
+        // $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+        return view('dashboards.user.orders.transit', compact('orders'));
     }
 }

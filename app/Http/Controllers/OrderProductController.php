@@ -19,6 +19,7 @@ class OrderProductController extends Controller
      */
     public function index()
     {   
+        $total_price = 0;
         $user = User::find(Auth::id());
         $orders_product = DB::table('order_products')
         ->join('products', 'order_products.product_id', '=', 'products.id')
@@ -27,11 +28,15 @@ class OrderProductController extends Controller
         ->select('order_products.*', 'products.img','products.Price')
         ->orderBy('order_products.created_at','desc')
         ->get();
-        
         $count = $user->OrderProducts()->where('order_product_quantity','!=','')->count();
+
+        foreach ($orders_product as $orderProduct){
+            
+            $total_price += $orderProduct->Price;
+        }
     
-        // dd($orders_product);
-        return view('dashboards.user.carts.index', compact('orders_product','count'));
+        // dd($total_price);
+        return view('dashboards.user.carts.index', compact('orders_product','count','total_price'));
 
     }
 

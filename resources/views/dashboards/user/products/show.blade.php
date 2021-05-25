@@ -26,7 +26,7 @@
                                         <div class="card" >
                                             <div class="card-header">   
                                                 <h2>
-                                                    Php: {{$product->Price}}
+                                                    Php {{$product->Price}}
                                                 </h2>
                                             </div>
                                         </div><br>
