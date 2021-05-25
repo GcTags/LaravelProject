@@ -239,7 +239,7 @@
 </body>
 
 <script>
-
+$(document).ready(function(){
 var modal = document.getElementById("profile_modal");
 var btn = document.getElementById("profile_btn");
 var cls = document.getElementById("close");
@@ -256,6 +256,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+});
 </script>
 
 </html>
