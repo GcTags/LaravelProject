@@ -70,7 +70,7 @@ class UserTableController extends Controller
      */
     public function show(User $user)
     {
-        return view('dashboards.user.users.edit', compact('user'));
+        return view('dashboards.user.user.edit', compact('user'));
     }
 
     /**
