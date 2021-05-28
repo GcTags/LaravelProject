@@ -9,6 +9,6 @@ class UserController extends Controller
     //
     function index()
     {
-        return view('dashboards.user.index');
+        return redirect('products');
     }
 }
